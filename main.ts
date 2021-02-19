@@ -230,18 +230,18 @@ function Spawn_Asteroid (direction: number, speed: number) {
     Asteroid = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . 4 4 4 . . . . . . 
-        . . . 4 4 4 4 4 . 4 4 . . . . . 
-        . . 4 4 . . . . . . . 4 4 . . . 
-        . . 4 . . . . . . . . . 4 . . . 
-        . . 4 . . . . . . . . . . 4 . . 
-        . 4 4 . . . . . . . . . . 4 . . 
-        . 4 . . . . . . . . . . . . 4 . 
-        . 4 . . . . . . . . . . . . 4 . 
-        . 4 4 . . . . . . . . . . . 4 . 
-        . . 4 . . . . . . . . . . . 4 . 
-        . . 4 4 . . . . . . . . . . 4 . 
-        . . 4 . . . . . . . . . . 4 . . 
-        . . . 4 . . 4 4 4 . . . . 4 . . 
+        . . . 4 4 4 4 4 4 4 4 . . . . . 
+        . . 4 4 4 4 4 4 e 4 4 4 4 . . . 
+        . . 4 4 e 4 4 4 4 4 4 e 4 . . . 
+        . . 4 4 4 4 4 4 4 4 4 4 4 4 . . 
+        . 4 4 4 4 4 4 4 4 4 4 e 4 4 . . 
+        . 4 4 4 4 e 4 4 4 e 4 4 4 4 4 . 
+        . 4 e 4 4 4 4 4 4 4 4 4 4 4 4 . 
+        . 4 4 4 4 4 4 4 4 4 4 4 e 4 4 . 
+        . . 4 4 e 4 4 4 4 4 4 4 4 4 4 . 
+        . . 4 4 4 4 4 4 e 4 4 4 4 4 4 . 
+        . . 4 4 4 4 4 4 4 4 4 4 e 4 . . 
+        . . . 4 4 e e 4 4 4 4 4 4 4 . . 
         . . . 4 4 4 . . . 4 4 4 4 . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Enemy)
@@ -274,9 +274,9 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (GodMode == 0) {
         sprite.setVelocity(0, 0)
-        sprite.destroy(effects.disintegrate, 500)
-        info.changeLifeBy(-1)
+        sprite.destroy(effects.disintegrate, 2000)
         pause(2000)
+        info.changeLifeBy(-1)
         start_stage()
     }
 })
@@ -303,6 +303,7 @@ game.onUpdateInterval(2000, function () {
 game.onUpdateInterval(100, function () {
     Handle_Sprite_Wrapping(Ship, Screen_Margin)
     for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        transformSprites.changeRotation(value, 5)
         Handle_Sprite_Wrapping(value, Screen_Margin)
     }
 })
